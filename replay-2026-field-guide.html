@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Replay 2026 — Field Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f7f6f2;
+    --surface: #ffffff;
+    --surface2: #f0ede6;
+    --border: #e2ddd6;
+    --border-strong: #c8c2b8;
+    --text: #1a1816;
+    --text-muted: #6b6560;
+    --text-hint: #9e9890;
+    --accent: #2d5be3;
+    --accent-bg: #eef1fd;
+    --accent-text: #1a3aad;
+    --green: #1e7c4a;
+    --green-bg: #e8f5ee;
+    --amber: #7a4f0d;
+    --amber-bg: #fdf3e3;
+    --pink: #8c2a52;
+    --pink-bg: #fcedf4;
+    --gray: #5a5550;
+    --gray-bg: #eeebe6;
+    --star: #d4900a;
+    --radius: 10px;
+    --radius-sm: 6px;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .page-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 2rem 2rem 1.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .header-sub {
+    font-size: 13px;
+    color: var(--text-hint);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .filters {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    padding: 5px 12px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.12s;
+  }
+
+  .filter-btn:hover { border-color: var(--border-strong); color: var(--text); }
+  .filter-btn.active {
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+  }
+
+  .main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .theme-section { margin-bottom: 2.5rem; }
+
+  .theme-label {
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-hint);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 10px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.125rem;
+    cursor: pointer;
+    transition: border-color 0.12s, box-shadow 0.12s;
+  }
+
+  .card:hover { border-color: var(--border-strong); }
+  .card.expanded { border-color: var(--text); }
+
+  .card-header { display: flex; align-items: flex-start; gap: 8px; }
+
+  .card-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.35;
+    flex: 1;
+  }
+
+  .star { color: var(--star); font-size: 13px; }
+
+  .chevron {
+    font-size: 10px;
+    color: var(--text-hint);
+    transition: transform 0.15s;
+    margin-top: 3px;
+    flex-shrink: 0;
+  }
+  .card.expanded .chevron { transform: rotate(180deg); }
+
+  .badges { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 6px; }
+
+  .badge {
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    padding: 2px 7px;
+    border-radius: 999px;
+    font-weight: 400;
+  }
+
+  .badge-ga { background: var(--green-bg); color: var(--green); }
+  .badge-preview { background: var(--amber-bg); color: var(--amber); }
+  .badge-prerelease { background: var(--pink-bg); color: var(--pink); }
+  .badge-demo { background: var(--gray-bg); color: var(--gray); }
+  .badge-keynote { background: var(--accent-bg); color: var(--accent-text); }
+
+  .card-summary {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+
+  .card-detail {
+    display: none;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+  .card.expanded .card-detail { display: block; }
+
+  .detail-section { margin-bottom: 12px; }
+
+  .detail-label {
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--text-hint);
+    margin-bottom: 4px;
+  }
+
+  .detail-text { font-size: 13px; color: var(--text); line-height: 1.5; }
+
+  .talk-track {
+    background: var(--surface2);
+    border-radius: var(--radius-sm);
+    border-left: 2px solid var(--border-strong);
+    padding: 8px 10px;
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.5;
+    font-style: italic;
+  }
+
+  .faq-item { margin-bottom: 8px; }
+
+  .faq-q {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--accent-text);
+    margin-bottom: 2px;
+  }
+
+  .faq-a { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+  .card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-family: 'DM Mono', monospace;
+    color: var(--accent);
+    text-decoration: none;
+    margin-top: 4px;
+  }
+  .card-link:hover { text-decoration: underline; }
+
+  .empty {
+    font-size: 14px;
+    color: var(--text-hint);
+    padding: 2rem 0;
+    font-family: 'DM Mono', monospace;
+  }
+
+  @media (max-width: 600px) {
+    .page-header { padding: 1.25rem 1rem 1rem; position: static; }
+    .main { padding: 1.25rem 1rem; }
+    .cards { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <div class="header-inner">
+    <div class="header-top">
+      <h1>Replay 2026 — Field guide</h1>
+      <span class="header-sub">May 5–6 · 19 features</span>
+    </div>
+    <div class="filters" id="filters">
+      <button class="filter-btn active" onclick="filter('all',this)">All features</button>
+      <button class="filter-btn" onclick="filter('ai',this)">Build AI faster</button>
+      <button class="filter-btn" onclick="filter('ops',this)">Operate at scale</button>
+      <button class="filter-btn" onclick="filter('keynote',this)">Keynote only</button>
+      <button class="filter-btn" onclick="filter('ga',this)">GA now</button>
+    </div>
+  </div>
+</header>
+
+<main class="main" id="content"></main>
+
+<script>
+const features = [
+  {
+    theme:"ai", themeLabel:"Theme 1 — Build durable AI & apps faster",
+    name:"Serverless workers",
+    keynote:true, status:"prerelease",
+    summary:"Run Temporal workers on AWS Lambda — scales to zero, no infra to manage, pay only when code runs.",
+    talkTrack:"\"You can now run Temporal workers on serverless compute like AWS Lambda — no infrastructure to manage, it scales automatically, and you only pay when your code runs.\"",
+    whoCaresAbout:"Engineering leaders evaluating Temporal; developers building POCs; platform teams managing cloud spend; small teams without SRE",
+    faqs:[
+      {q:"Which clouds are supported?", a:"AWS Lambda at launch. Google Cloud Run PM is joining on stage — broader cloud support is coming."},
+      {q:"Is this just for simple use cases?", a:"No — full Temporal durability, same programming model. The difference is compute, not capability."},
+      {q:"How do I get access?", a:"Pre-release — customers request access through their account team."},
+      {q:"What about competitors who already have serverless?", a:"This neutralizes Inngest, Restate, and AWS LDF's main messaging point against us. We have durability they don't."}
+    ],
+    notionUrl:"https://app.notion.com/p/2e28fc56773880b9956bfa86ba550d35"
+  },
+  {
+    theme:"ai", themeLabel:"Theme 1 — Build durable AI & apps faster",
+    name:"Standalone activities",
+    keynote:true, status:"preview",
+    summary:"Run any single-step job on Temporal with built-in durability, retries, and visibility — no workflow required. Upgrade path included.",
+    talkTrack:"\"Standalone Activities let you run any single-step job on Temporal with built-in durability, retries, and visibility — and when you outgrow it, the same code works inside a workflow with no rewrite.\"",
+    whoCaresAbout:"Teams using SQS/Redis/Celery for job processing; developers evaluating Temporal but not ready for full workflows; existing customers with new single-step use cases",
+    faqs:[
+      {q:"What SDKs are available?", a:"Public Preview in Go, Python, and .NET now. Java and TypeScript are pre-release."},
+      {q:"How does pricing work?", a:"Same as activities inside workflows — counted as actions."},
+      {q:"Can we use this instead of a workflow?", a:"Yes, for single-step jobs. The key value is the upgrade path — same code drops into a workflow when complexity grows."},
+      {q:"Does it replace Celery/SQS?", a:"Directly competes with job queues. You get visibility, retries, pause/cancel/reset, and an upgrade path to full orchestration."}
+    ],
+    notionUrl:"https://app.notion.com/p/2638fc56773880f19710f33cc12a8e36"
+  },
+  {
+    theme:"ai", themeLabel:"Theme 1 — Build durable AI & apps faster",
+    name:"Workflow streams",
+    keynote:true, status:"preview",
+    summary:"Real-time token-by-token streaming from AI workflows. Durable, crash-proof, observable — no Redis pub/sub needed.",
+    talkTrack:"\"You can now stream real-time, token-by-token updates from AI workflows — so your customers see progress as it happens, not just a final result.\"",
+    whoCaresAbout:"Teams building customer-facing AI agents or copilots; developers building LLM-powered products; anyone needing real-time UX for long-running AI work",
+    faqs:[
+      {q:"What was this called before?", a:"'Streaming' — renamed to Workflow Streams to avoid confusion with byte-by-byte server streaming."},
+      {q:"Does this cost more?", a:"No additional pricing — counts against standard actions. Tunable flush frequency (every N seconds)."},
+      {q:"Which SDKs?", a:"Python first in Public Preview, more languages coming."},
+      {q:"Why couldn't Temporal do this before?", a:"This was a top customer blocker. LangChain publicly called it out. It's now native and durable."}
+    ],
+    notionUrl:"https://app.notion.com/p/2be8fc56773880c4ab41c542d67a8ac5"
+  },
+  {
+    theme:"ai", themeLabel:"Theme 1 — Build durable AI & apps faster",
+    name:"External storage (claim check)",
+    keynote:true, status:"preview",
+    summary:"Store large payloads in Amazon S3 instead of Temporal history. Removes payload size limits for AI/ML pipelines.",
+    talkTrack:"\"Temporal now handles large AI inputs and outputs through external storage like S3 — so payload size is no longer a constraint for your agentic workflows.\"",
+    whoCaresAbout:"Teams building AI/ML pipelines with large data; developers hitting payload size limits; platform teams managing storage costs",
+    faqs:[
+      {q:"What are the current payload limits?", a:"Default is 2MB per event. Large model inputs/outputs often exceed this."},
+      {q:"Which SDKs?", a:"Public Preview for Python and Go."},
+      {q:"Do we need to manage the S3 bucket?", a:"Yes — you bring your own S3 bucket. Temporal handles the routing automatically."}
+    ],
+    notionUrl:"https://app.notion.com/p/2558fc56773880229cbad3f985627426"
+  },
+  {
+    theme:"ai", themeLabel:"Theme 1 — Build durable AI & apps faster",
+    name:"Google ADK integration",
+    keynote:true, status:"ga",
+    summary:"LLM calls and tool executions inside Google ADK agents run as Temporal activities — automatic retries and recovery built in.",
+    talkTrack:"\"Our Google ADK integration makes your agents production-ready — LLM calls and tool executions run as Temporal Activities with automatic retries and recovery built in.\"",
+    whoCaresAbout:"Teams building with Google ADK; developers wanting production-grade agents",
+    faqs:[
+      {q:"What does Temporal add on top of ADK?", a:"Durability. ADK defines the agent; Temporal makes every LLM call and tool execution retryable, observable, and resumable after failure."},
+      {q:"Is this just for Google AI?", a:"ADK is the integration here, but the broader AI partner ecosystem includes other frameworks too."}
+    ],
+    notionUrl:"https://app.notion.com/p/2fd8fc567738804aba77f4e5751eb482"
+  },
+  {
+    theme:"ai", themeLabel:"Theme 1 — Build durable AI & apps faster",
+    name:"OpenAI agents SDK sandbox support",
+    keynote:false, status:"ga",
+    summary:"Temporal's Python SDK integrates with OpenAI Agents SDK sandbox mode — durability, session management, and recovery out of the box.",
+    talkTrack:"\"Temporal now integrates with OpenAI Agents SDK sandbox mode — your sandbox agents get durability, session management, and recovery out of the box.\"",
+    whoCaresAbout:"Teams building with OpenAI Agents SDK; developers running sandboxed agent environments",
+    faqs:[
+      {q:"Where can I see a demo?", a:"Temporal's YouTube channel has a demo. Temporal is also an official example in OpenAI's repo."},
+      {q:"What's a 'sandbox' in this context?", a:"OpenAI sandbox mode lets agents run in isolated environments. Sandboxes are a growing trend for safely running agent code."}
+    ],
+    notionUrl:"https://app.notion.com/p/3358fc56773880bea9f7e465c0287868"
+  },
+  {
+    theme:"ai", themeLabel:"Theme 1 — Build durable AI & apps faster",
+    name:"Nexus SDK expansions",
+    keynote:true, status:"preview",
+    summary:"Nexus (cross-namespace/cross-team service connections) now available in Python (GA), .NET and TypeScript (Public Preview).",
+    talkTrack:"\"Nexus now supports Python natively at GA, and .NET and TypeScript in Public Preview — so more teams can connect services across namespaces in their language.\"",
+    whoCaresAbout:"Platform teams standardizing cross-service integrations; multi-team Temporal deployments",
+    faqs:[
+      {q:"What is Nexus?", a:"Nexus connects Temporal services across namespace and team boundaries — think cross-service RPC with Temporal durability guarantees."},
+      {q:"What languages are GA?", a:"Go and Java have been GA. Python is newly GA. .NET and TypeScript are Public Preview."}
+    ],
+    notionUrl:"https://app.notion.com/p/22c8fc5677388066a330dea9868a4560"
+  },
+  {
+    theme:"ai", themeLabel:"Theme 1 — Build durable AI & apps faster",
+    name:"Temporal Rust SDK",
+    keynote:false, status:"preview",
+    summary:"First-party SDK for Rust. Mention only with known Rust shops.",
+    talkTrack:"\"We now have a first-party Rust SDK so Rust-heavy teams can build workflows and activities natively.\"",
+    whoCaresAbout:"Rust-heavy engineering teams; performance-critical infrastructure teams",
+    faqs:[
+      {q:"Should I lead with this?", a:"No — only mention if the customer is already Rust-heavy. It's niche but a strong signal for those teams."}
+    ],
+    notionUrl:"https://app.notion.com/p/2ee8fc56773880e2b8f0d4527aaba3b6"
+  },
+  {
+    theme:"ops", themeLabel:"Theme 2 — Operate at scale with confidence",
+    name:"Task queue priority & fairness",
+    keynote:true, status:"ga",
+    summary:"Priority: urgent work runs first. Fairness: one big job can't starve everyone else on shared infrastructure. Both GA.",
+    talkTrack:"Priority: \"You can now set priority levels on your task queue so urgent work runs first — no custom scheduling layers needed.\" Fairness: \"Fairness distributes work fairly across tenants or workloads so one large batch job can't starve everyone else.\"",
+    whoCaresAbout:"Platform engineers running mixed workloads; multi-tenant platform teams; SREs managing shared infrastructure",
+    faqs:[
+      {q:"Are Priority and Fairness the same thing?", a:"No. Priority controls which tasks run first. Fairness prevents starvation across tenants or workload types. They're complementary."},
+      {q:"Can I see a customer example?", a:"Relativity is speaking at Replay about their Fairness use case. Webinar May 15 goes deeper."},
+      {q:"Is this available now?", a:"GA — available now."}
+    ],
+    notionUrl:"https://app.notion.com/p/1df8fc567738807e8d7de27ddcdf2709"
+  },
+  {
+    theme:"ops", themeLabel:"Theme 2 — Operate at scale with confidence",
+    name:"Worker versioning (safe deploys)",
+    keynote:false, status:"ga",
+    summary:"Deploy new worker code without breaking in-flight workflows. Temporal pins and ramps traffic across versions automatically.",
+    talkTrack:"\"Worker Versioning lets you deploy new code without breaking workflows that are already running — Temporal handles the traffic routing across versions automatically.\"",
+    whoCaresAbout:"Platform engineers managing production deploys; SREs; teams with long-running workflows",
+    faqs:[
+      {q:"What happened to the old versioning approach?", a:"The previous approach required code-level markers (getVersion/patched). Worker Versioning is deployment-level — cleaner and automated."},
+      {q:"Is this available now?", a:"GA — available now."}
+    ],
+    notionUrl:"https://app.notion.com/p/1d78fc5677388072b3d3dc7984d26034"
+  },
+  {
+    theme:"ops", themeLabel:"Theme 2 — Operate at scale with confidence",
+    name:"OpenMetrics / Prometheus endpoint",
+    keynote:false, status:"ga",
+    summary:"Prometheus-compatible metrics endpoint for Temporal Cloud. Plug into existing observability stacks with full granularity.",
+    talkTrack:"\"You can now plug Temporal Cloud metrics directly into your existing Prometheus/Grafana stack — no custom plumbing, full granularity down to task queues and workflows.\"",
+    whoCaresAbout:"SREs and ops teams; platform engineers with existing observability stacks",
+    faqs:[
+      {q:"Do I need to change my existing Grafana setup?", a:"No — it's a standard Prometheus scrape endpoint. Drop it into your existing stack."},
+      {q:"Note on deprecation?", a:"The legacy PromQL-style endpoint is being deprecated in favor of this OpenMetrics endpoint. Customers should migrate."}
+    ],
+    notionUrl:"https://app.notion.com/p/1d68fc56773880d1b59dc759a10874be"
+  },
+  {
+    theme:"ops", themeLabel:"Theme 2 — Operate at scale with confidence",
+    name:"Multi-region replication (HA)",
+    keynote:true, status:"ga",
+    summary:"Replicate your namespace across regions. Automatic failover with 20-minute RTO — one click to enable.",
+    talkTrack:"\"You can replicate your namespace across regions with one click — if a region goes down, Temporal automatically fails over and your workflows keep running.\"",
+    whoCaresAbout:"Enterprise customers with uptime SLAs; regulated industries; platform teams responsible for DR",
+    faqs:[
+      {q:"What's the RTO?", a:"20 minutes for automatic failover."},
+      {q:"How do I enable it?", a:"One click in the Cloud UI or a CLI/API command — no manual runbooks."},
+      {q:"Is this the same as multi-cloud?", a:"No. Multi-region replicates across regions within a cloud provider. Multi-cloud replicates across providers (e.g., AWS to GCP)."}
+    ],
+    notionUrl:"https://app.notion.com/p/1e68fc567738803dbe68f88ba2c79f90"
+  },
+  {
+    theme:"ops", themeLabel:"Theme 2 — Operate at scale with confidence",
+    name:"Multi-cloud replication (HA)",
+    keynote:true, status:"ga",
+    summary:"Replicate across cloud providers (AWS to GCP) to survive an entire provider outage. GA now.",
+    talkTrack:"\"Multi-cloud replication lets you survive an entire cloud provider outage — replicate across AWS and GCP so you're never single-cloud dependent.\"",
+    whoCaresAbout:"Enterprise customers with multi-cloud mandates; regulated industries; CTOs managing cloud risk",
+    faqs:[
+      {q:"Which provider combinations are supported?", a:"AWS and GCP at launch."},
+      {q:"How is this different from multi-region?", a:"Multi-region stays within one cloud provider. Multi-cloud spans providers — protection against a full provider outage or mandate."},
+      {q:"How do I enable it?", a:"One click in the Cloud UI or a CLI/API command."}
+    ],
+    notionUrl:"https://app.notion.com/p/1d68fc567738800081c7f1c8ed0f8ca6"
+  },
+  {
+    theme:"ops", themeLabel:"Theme 2 — Operate at scale with confidence",
+    name:"Reverse migration (cloud to self-hosted)",
+    keynote:true, status:"demo",
+    summary:"Documented, tooled migration path from Temporal Cloud back to self-hosted. Eliminates vendor lock-in concerns in enterprise deals.",
+    talkTrack:"\"We now have a documented, tooled migration path from Temporal Cloud back to self-hosted — so customers know they're never locked in.\"",
+    whoCaresAbout:"Enterprise prospects with vendor lock-in concerns; procurement/legal teams; regulated customers",
+    faqs:[
+      {q:"Can customers use this today?", a:"Demo ready — not yet in pre-release. Talk to sales to get on the waitlist."},
+      {q:"Why would Temporal offer this?", a:"It removes the lock-in objection from enterprise deals. Confidence in an exit path actually makes customers more willing to commit."},
+      {q:"Does this mean customers will leave?", a:"The opposite — it reduces anxiety that prevents them from expanding."}
+    ],
+    notionUrl:null
+  },
+  {
+    theme:"ops", themeLabel:"Theme 2 — Operate at scale with confidence",
+    name:"Custom roles",
+    keynote:false, status:"prerelease",
+    summary:"Granular, least-privilege access control at account, project, or namespace level.",
+    talkTrack:"\"Custom Roles let you define granular, least-privilege permissions at the account, project, or namespace level — no more over-scoped admin roles.\"",
+    whoCaresAbout:"Security teams; enterprise compliance; IT admins managing Temporal Cloud access",
+    faqs:[
+      {q:"What's available today?", a:"Pre-release — customers should express interest through their account team."},
+      {q:"How does this relate to SCIM?", a:"SCIM handles user provisioning/deprovisioning via your IdP. Custom Roles defines what those users can do once they're in."}
+    ],
+    notionUrl:null
+  },
+  {
+    theme:"ops", themeLabel:"Theme 2 — Operate at scale with confidence",
+    name:"Billing API & billable action metrics",
+    keynote:false, status:"preview",
+    summary:"Programmatic billing/usage data for chargeback reporting, plus per-minute billable action metrics via OpenMetrics.",
+    talkTrack:"\"You now have programmatic access to billing data, plus per-minute metrics so you can see exactly which workflows are driving costs.\"",
+    whoCaresAbout:"Platform engineers managing cost allocation; finance/ops teams; enterprise customers with chargeback requirements",
+    faqs:[
+      {q:"What's the difference between the Billing API and the Billable Action Metrics?", a:"Billing API: high-level cost tracking, hourly granularity, ties to invoices, includes cost. Billable Action Metrics: granular optimization, per-minute, per-workflow-type, usage only — no cost data."},
+      {q:"Which one should I recommend?", a:"Both — they serve different personas. Finance wants the API for chargeback. Engineers want the metrics for optimization."}
+    ],
+    notionUrl:"https://app.notion.com/p/2648fc56773880e1b0a1da45930acb27"
+  },
+  {
+    theme:"ops", themeLabel:"Theme 2 — Operate at scale with confidence",
+    name:"Capacity modes (TRUs)",
+    keynote:false, status:"ga",
+    summary:"Self-service namespace capacity management for traffic spikes and batch jobs. No support ticket needed.",
+    talkTrack:"\"Capacity Modes are now GA — customers can self-service scale their namespace capacity for traffic spikes without filing a support ticket.\"",
+    whoCaresAbout:"Existing customers with spiky workloads; platform teams managing capacity",
+    faqs:[
+      {q:"Is there a cap?", a:"Self-service up to 6K APS. Requests above that need a ticket with the cloud team."},
+      {q:"Any change from Public Preview?", a:"Same feature set — just now GA."}
+    ],
+    notionUrl:"https://app.notion.com/p/1d78fc5677388007a617e009b232243b"
+  },
+  {
+    theme:"ops", themeLabel:"Theme 2 — Operate at scale with confidence",
+    name:"Private connectivity v3 (PrivateLink + PSC)",
+    keynote:false, status:"ga",
+    summary:"Self-serve AWS PrivateLink and GCP Private Service Connect. All Temporal traffic stays on the cloud private backbone.",
+    talkTrack:"\"Customers can now self-serve PrivateLink and Private Service Connect to keep all Temporal traffic on the cloud provider's private backbone.\"",
+    whoCaresAbout:"Security teams; enterprise compliance; any deal with network isolation requirements",
+    faqs:[
+      {q:"What was the previous experience?", a:"Required opening a support ticket. Now fully self-serve."},
+      {q:"Which providers?", a:"AWS PrivateLink and GCP Private Service Connect."}
+    ],
+    notionUrl:null
+  },
+  {
+    theme:"ops", themeLabel:"Theme 2 — Operate at scale with confidence",
+    name:"SCIM user management",
+    keynote:false, status:"ga",
+    summary:"Automated user provisioning/deprovisioning and group management via your IdP. Works like any enterprise SaaS tool.",
+    talkTrack:"\"SCIM is now GA — your IdP can automatically provision and deprovision Temporal Cloud users, just like any other enterprise SaaS tool.\"",
+    whoCaresAbout:"IT admins; security/compliance teams; enterprise procurement",
+    faqs:[
+      {q:"Which IdPs are supported?", a:"Any SCIM 2.0-compatible IdP — Okta, Azure AD, etc."},
+      {q:"What about SSO?", a:"SCIM handles provisioning. SSO/SAML for authentication is separate — both are available."}
+    ],
+    notionUrl:null
+  }
+];
+
+function getBadgeClass(s) {
+  return {ga:'badge-ga',preview:'badge-preview',prerelease:'badge-prerelease',demo:'badge-demo'}[s]||'badge-demo';
+}
+function getStatusLabel(s) {
+  return {ga:'GA',preview:'Public preview',prerelease:'Pre-release',demo:'Demo ready'}[s]||s;
+}
+
+let activeFilter = 'all';
+
+function filter(type, btn) {
+  activeFilter = type;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+function toggleCard(id) {
+  document.getElementById('card-'+id).classList.toggle('expanded');
+}
+
+function render() {
+  const container = document.getElementById('content');
+  const visible = features.filter(f => {
+    if (activeFilter === 'ai') return f.theme === 'ai';
+    if (activeFilter === 'ops') return f.theme === 'ops';
+    if (activeFilter === 'keynote') return f.keynote;
+    if (activeFilter === 'ga') return f.status === 'ga';
+    return true;
+  });
+
+  if (!visible.length) {
+    container.innerHTML = '<p class="empty">No features match this filter.</p>';
+    return;
+  }
+
+  let html = '';
+  let lastTheme = null;
+  let openSection = false;
+
+  visible.forEach((f, i) => {
+    const idx = features.indexOf(f);
+    if (f.themeLabel !== lastTheme) {
+      if (openSection) html += '</div></div>';
+      html += `<div class="theme-section"><div class="theme-label">${f.themeLabel}</div><div class="cards">`;
+      lastTheme = f.themeLabel;
+      openSection = true;
+    }
+
+    const faqsHtml = f.faqs.map(faq =>
+      `<div class="faq-item"><div class="faq-q">Q: ${faq.q}</div><div class="faq-a">${faq.a}</div></div>`
+    ).join('');
+
+    const linkHtml = f.notionUrl
+      ? `<a class="card-link" href="${f.notionUrl}" target="_blank">Full brief in Notion &rarr;</a>`
+      : '';
+
+    html += `
+      <div class="card" id="card-${idx}" onclick="toggleCard(${idx})">
+        <div class="card-header">
+          <div style="flex:1">
+            <div class="card-name">${f.keynote ? '<span class="star">&#9733;</span> ' : ''}${f.name}</div>
+            <div class="badges">
+              <span class="badge ${getBadgeClass(f.status)}">${getStatusLabel(f.status)}</span>
+              ${f.keynote ? '<span class="badge badge-keynote">Keynote</span>' : ''}
+            </div>
+          </div>
+          <span class="chevron">&#9660;</span>
+        </div>
+        <div class="card-summary">${f.summary}</div>
+        <div class="card-detail">
+          <div class="detail-section">
+            <div class="detail-label">Talk track</div>
+            <div class="talk-track">${f.talkTrack}</div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Who cares</div>
+            <div class="detail-text">${f.whoCaresAbout}</div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Customer FAQs</div>
+            ${faqsHtml}
+          </div>
+          ${linkHtml}
+        </div>
+      </div>`;
+  });
+
+  if (openSection) html += '</div></div>';
+  container.innerHTML = html;
+}
+
+render();
+</script>
+</body>
+</html>
