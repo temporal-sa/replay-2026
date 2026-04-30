@@ -287,7 +287,8 @@ const features = [
       {q:"How do I get access?", a:"Pre-release — customers request access through their account team."},
       {q:"What about competitors who already have serverless?", a:"This neutralizes Inngest, Restate, and AWS LDF's main messaging point against us. We have durability they don't."}
     ],
-    notionUrl:"https://app.notion.com/p/2e28fc56773880b9956bfa86ba550d35"
+    notionUrl:"https://app.notion.com/p/2e28fc56773880b9956bfa86ba550d35",
+    docsUrl:null
   },
   {
     theme:"ai", themeLabel:"Theme 1 — Build durable AI & apps faster",
@@ -302,7 +303,8 @@ const features = [
       {q:"Can we use this instead of a workflow?", a:"Yes, for single-step jobs. The key value is the upgrade path — same code drops into a workflow when complexity grows."},
       {q:"Does it replace Celery/SQS?", a:"Directly competes with job queues. You get visibility, retries, pause/cancel/reset, and an upgrade path to full orchestration."}
     ],
-    notionUrl:"https://app.notion.com/p/2638fc56773880f19710f33cc12a8e36"
+    notionUrl:"https://app.notion.com/p/2638fc56773880f19710f33cc12a8e36",
+    docsUrl:"https://docs.temporal.io/standalone-activity"
   },
   {
     theme:"ai", themeLabel:"Theme 1 — Build durable AI & apps faster",
@@ -331,7 +333,8 @@ const features = [
       {q:"Which SDKs?", a:"Public Preview for Python and Go."},
       {q:"Do we need to manage the S3 bucket?", a:"Yes — you bring your own S3 bucket. Temporal handles the routing automatically."}
     ],
-    notionUrl:"https://app.notion.com/p/2558fc56773880229cbad3f985627426"
+    notionUrl:"https://app.notion.com/p/2558fc56773880229cbad3f985627426",
+    docsUrl:"https://docs.temporal.io/external-storage"
   },
   {
     theme:"ai", themeLabel:"Theme 1 — Build durable AI & apps faster",
@@ -344,7 +347,8 @@ const features = [
       {q:"What does Temporal add on top of ADK?", a:"Durability. ADK defines the agent; Temporal makes every LLM call and tool execution retryable, observable, and resumable after failure."},
       {q:"Is this just for Google AI?", a:"ADK is the integration here, but the broader AI partner ecosystem includes other frameworks too."}
     ],
-    notionUrl:"https://app.notion.com/p/2fd8fc567738804aba77f4e5751eb482"
+    notionUrl:"https://app.notion.com/p/2fd8fc567738804aba77f4e5751eb482",
+    docsUrl:null
   },
   {
     theme:"ai", themeLabel:"Theme 1 — Build durable AI & apps faster",
@@ -357,7 +361,8 @@ const features = [
       {q:"Where can I see a demo?", a:"Temporal's YouTube channel has a demo. Temporal is also an official example in OpenAI's repo."},
       {q:"What's a 'sandbox' in this context?", a:"OpenAI sandbox mode lets agents run in isolated environments. Sandboxes are a growing trend for safely running agent code."}
     ],
-    notionUrl:"https://app.notion.com/p/3358fc56773880bea9f7e465c0287868"
+    notionUrl:"https://app.notion.com/p/3358fc56773880bea9f7e465c0287868",
+    docsUrl:null
   },
   {
     theme:"ai", themeLabel:"Theme 1 — Build durable AI & apps faster",
@@ -370,7 +375,8 @@ const features = [
       {q:"What is Nexus?", a:"Nexus connects Temporal services across namespace and team boundaries — think cross-service RPC with Temporal durability guarantees."},
       {q:"What languages are GA?", a:"Go and Java have been GA. Python is newly GA. .NET and TypeScript are Public Preview."}
     ],
-    notionUrl:"https://app.notion.com/p/22c8fc5677388066a330dea9868a4560"
+    notionUrl:"https://app.notion.com/p/22c8fc5677388066a330dea9868a4560",
+    docsUrl:"https://docs.temporal.io/nexus"
   },
   {
     theme:"ai", themeLabel:"Theme 1 — Build durable AI & apps faster",
@@ -382,7 +388,8 @@ const features = [
     faqs:[
       {q:"Should I lead with this?", a:"No — only mention if the customer is already Rust-heavy. It's niche but a strong signal for those teams."}
     ],
-    notionUrl:"https://app.notion.com/p/2ee8fc56773880e2b8f0d4527aaba3b6"
+    notionUrl:"https://app.notion.com/p/2ee8fc56773880e2b8f0d4527aaba3b6",
+    docsUrl:null
   },
   {
     theme:"ops", themeLabel:"Theme 2 — Operate at scale with confidence",
@@ -396,7 +403,8 @@ const features = [
       {q:"Can I see a customer example?", a:"Relativity is speaking at Replay about their Fairness use case. Webinar May 15 goes deeper."},
       {q:"Is this available now?", a:"GA — available now."}
     ],
-    notionUrl:"https://app.notion.com/p/1df8fc567738807e8d7de27ddcdf2709"
+    notionUrl:"https://app.notion.com/p/1df8fc567738807e8d7de27ddcdf2709",
+    docsUrl:"https://docs.temporal.io/develop/task-queue-priority-fairness"
   },
   {
     theme:"ops", themeLabel:"Theme 2 — Operate at scale with confidence",
@@ -409,7 +417,8 @@ const features = [
       {q:"What happened to the old versioning approach?", a:"The previous approach required code-level markers (getVersion/patched). Worker Versioning is deployment-level — cleaner and automated."},
       {q:"Is this available now?", a:"GA — available now."}
     ],
-    notionUrl:"https://app.notion.com/p/1d78fc5677388072b3d3dc7984d26034"
+    notionUrl:"https://app.notion.com/p/1d78fc5677388072b3d3dc7984d26034",
+    docsUrl:"https://docs.temporal.io/production-deployment/worker-deployments/worker-versioning"
   },
   {
     theme:"ops", themeLabel:"Theme 2 — Operate at scale with confidence",
@@ -422,7 +431,8 @@ const features = [
       {q:"Do I need to change my existing Grafana setup?", a:"No — it's a standard Prometheus scrape endpoint. Drop it into your existing stack."},
       {q:"Note on deprecation?", a:"The legacy PromQL-style endpoint is being deprecated in favor of this OpenMetrics endpoint. Customers should migrate."}
     ],
-    notionUrl:"https://app.notion.com/p/1d68fc56773880d1b59dc759a10874be"
+    notionUrl:"https://app.notion.com/p/1d68fc56773880d1b59dc759a10874be",
+    docsUrl:"https://docs.temporal.io/cloud/metrics/openmetrics"
   },
   {
     theme:"ops", themeLabel:"Theme 2 — Operate at scale with confidence",
@@ -436,7 +446,8 @@ const features = [
       {q:"How do I enable it?", a:"One click in the Cloud UI or a CLI/API command — no manual runbooks."},
       {q:"Is this the same as multi-cloud?", a:"No. Multi-region replicates across regions within a cloud provider. Multi-cloud replicates across providers (e.g., AWS to GCP)."}
     ],
-    notionUrl:"https://app.notion.com/p/1e68fc567738803dbe68f88ba2c79f90"
+    notionUrl:"https://app.notion.com/p/1e68fc567738803dbe68f88ba2c79f90",
+    docsUrl:"https://docs.temporal.io/cloud/high-availability"
   },
   {
     theme:"ops", themeLabel:"Theme 2 — Operate at scale with confidence",
@@ -450,7 +461,8 @@ const features = [
       {q:"How is this different from multi-region?", a:"Multi-region stays within one cloud provider. Multi-cloud spans providers — protection against a full provider outage or mandate."},
       {q:"How do I enable it?", a:"One click in the Cloud UI or a CLI/API command."}
     ],
-    notionUrl:"https://app.notion.com/p/1d68fc567738800081c7f1c8ed0f8ca6"
+    notionUrl:"https://app.notion.com/p/1d68fc567738800081c7f1c8ed0f8ca6",
+    docsUrl:"https://docs.temporal.io/cloud/high-availability"
   },
   {
     theme:"ops", themeLabel:"Theme 2 — Operate at scale with confidence",
@@ -464,7 +476,8 @@ const features = [
       {q:"Why would Temporal offer this?", a:"It removes the lock-in objection from enterprise deals. Confidence in an exit path actually makes customers more willing to commit."},
       {q:"Does this mean customers will leave?", a:"The opposite — it reduces anxiety that prevents them from expanding."}
     ],
-    notionUrl:null
+    notionUrl:null,
+    docsUrl:null
   },
   {
     theme:"ops", themeLabel:"Theme 2 — Operate at scale with confidence",
@@ -477,7 +490,8 @@ const features = [
       {q:"What's available today?", a:"Pre-release — customers should express interest through their account team."},
       {q:"How does this relate to SCIM?", a:"SCIM handles user provisioning/deprovisioning via your IdP. Custom Roles defines what those users can do once they're in."}
     ],
-    notionUrl:null
+    notionUrl:null,
+    docsUrl:null
   },
   {
     theme:"ops", themeLabel:"Theme 2 — Operate at scale with confidence",
@@ -490,7 +504,8 @@ const features = [
       {q:"What's the difference between the Billing API and the Billable Action Metrics?", a:"Billing API: high-level cost tracking, hourly granularity, ties to invoices, includes cost. Billable Action Metrics: granular optimization, per-minute, per-workflow-type, usage only — no cost data."},
       {q:"Which one should I recommend?", a:"Both — they serve different personas. Finance wants the API for chargeback. Engineers want the metrics for optimization."}
     ],
-    notionUrl:"https://app.notion.com/p/2648fc56773880e1b0a1da45930acb27"
+    notionUrl:"https://app.notion.com/p/2648fc56773880e1b0a1da45930acb27",
+    docsUrl:"https://docs.temporal.io/cloud/billing-api"
   },
   {
     theme:"ops", themeLabel:"Theme 2 — Operate at scale with confidence",
@@ -503,7 +518,8 @@ const features = [
       {q:"Is there a cap?", a:"Self-service up to 6K APS. Requests above that need a ticket with the cloud team."},
       {q:"Any change from Public Preview?", a:"Same feature set — just now GA."}
     ],
-    notionUrl:"https://app.notion.com/p/1d78fc5677388007a617e009b232243b"
+    notionUrl:"https://app.notion.com/p/1d78fc5677388007a617e009b232243b",
+    docsUrl:"https://docs.temporal.io/cloud/capacity-modes"
   },
   {
     theme:"ops", themeLabel:"Theme 2 — Operate at scale with confidence",
@@ -516,7 +532,8 @@ const features = [
       {q:"What was the previous experience?", a:"Required opening a support ticket. Now fully self-serve."},
       {q:"Which providers?", a:"AWS PrivateLink and GCP Private Service Connect."}
     ],
-    notionUrl:null
+    notionUrl:null,
+    docsUrl:"https://docs.temporal.io/cloud/connectivity"
   },
   {
     theme:"ops", themeLabel:"Theme 2 — Operate at scale with confidence",
@@ -529,7 +546,8 @@ const features = [
       {q:"Which IdPs are supported?", a:"Any SCIM 2.0-compatible IdP — Okta, Azure AD, etc."},
       {q:"What about SSO?", a:"SCIM handles provisioning. SSO/SAML for authentication is separate — both are available."}
     ],
-    notionUrl:null
+    notionUrl:null,
+    docsUrl:"https://docs.temporal.io/cloud/scim"
   }
 ];
 
@@ -585,9 +603,10 @@ function render() {
       `<div class="faq-item"><div class="faq-q">Q: ${faq.q}</div><div class="faq-a">${faq.a}</div></div>`
     ).join('');
 
-    const linkHtml = f.notionUrl
-      ? `<a class="card-link" href="${f.notionUrl}" target="_blank">Full brief in Notion &rarr;</a>`
-      : '';
+    const linksHtml = [
+      f.docsUrl ? `<a class="card-link" href="${f.docsUrl}" target="_blank">Public docs &rarr;</a>` : '',
+      f.notionUrl ? `<a class="card-link" href="${f.notionUrl}" target="_blank">Full brief in Notion &rarr;</a>` : ''
+    ].filter(Boolean).join('');
 
     html += `
       <div class="card" id="card-${idx}" onclick="toggleCard(${idx})">
@@ -615,7 +634,7 @@ function render() {
             <div class="detail-label">Customer FAQs</div>
             ${faqsHtml}
           </div>
-          ${linkHtml}
+          ${linksHtml ? `<div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:4px">${linksHtml}</div>` : ''}
         </div>
       </div>`;
   });
