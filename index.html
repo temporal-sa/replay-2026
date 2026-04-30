@@ -260,6 +260,9 @@
       <h1>Replay 2026 — Field guide</h1>
       <span class="header-sub">May 5–6 · 19 features</span>
     </div>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:0.75rem">
+      <input type="search" id="search-input" placeholder="Search features, talk tracks, FAQs…" oninput="render()" style="flex:1;min-width:200px;max-width:400px;font-size:13px;font-family:inherit;padding:6px 10px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text);outline:none;" onfocus="this.style.borderColor='var(--border-strong)'" onblur="this.style.borderColor='var(--border)'">
+    </div>
     <div class="filters" id="filters">
       <button class="filter-btn active" onclick="filter('all',this)">All features</button>
       <button class="filter-btn" onclick="filter('ai',this)">Build AI faster</button>
@@ -573,12 +576,21 @@ function toggleCard(id) {
 
 function render() {
   const container = document.getElementById('content');
+  const query = (document.getElementById('search-input')?.value || '').toLowerCase().trim();
   const visible = features.filter(f => {
-    if (activeFilter === 'ai') return f.theme === 'ai';
-    if (activeFilter === 'ops') return f.theme === 'ops';
-    if (activeFilter === 'keynote') return f.keynote;
-    if (activeFilter === 'ga') return f.status === 'ga';
-    return true;
+    const passesFilter =
+      activeFilter === 'all' ? true :
+      activeFilter === 'ai' ? f.theme === 'ai' :
+      activeFilter === 'ops' ? f.theme === 'ops' :
+      activeFilter === 'keynote' ? f.keynote :
+      activeFilter === 'ga' ? f.status === 'ga' : true;
+    if (!passesFilter) return false;
+    if (!query) return true;
+    const searchable = [
+      f.name, f.summary, f.talkTrack, f.whoCaresAbout,
+      ...f.faqs.map(faq => faq.q + ' ' + faq.a)
+    ].join(' ').toLowerCase();
+    return searchable.includes(query);
   });
 
   if (!visible.length) {
