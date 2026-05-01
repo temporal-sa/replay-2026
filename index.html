@@ -258,7 +258,7 @@
   <div class="header-inner">
     <div class="header-top">
       <h1>Replay 2026 — Field guide</h1>
-      <span class="header-sub">May 5–6 · 19 features</span>
+      <span class="header-sub">May 5–6 · 22 features</span>
     </div>
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:0.75rem">
       <input type="search" id="search-input" placeholder="Search features, talk tracks, FAQs…" oninput="render()" style="flex:1;min-width:200px;max-width:400px;font-size:13px;font-family:inherit;padding:6px 10px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text);outline:none;" onfocus="this.style.borderColor='var(--border-strong)'" onblur="this.style.borderColor='var(--border)'">
@@ -288,7 +288,8 @@ const features = [
       {q:"Which clouds are supported?", a:"AWS Lambda at launch. Google Cloud Run PM is joining on stage — broader cloud support is coming."},
       {q:"Is this just for simple use cases?", a:"No — full Temporal durability, same programming model. The difference is compute, not capability."},
       {q:"How do I get access?", a:"Pre-release — customers request access through their account team."},
-      {q:"What about competitors who already have serverless?", a:"This neutralizes Inngest, Restate, and AWS LDF's main messaging point against us. We have durability they don't."}
+      {q:"What about competitors who already have serverless?", a:"This neutralizes Inngest, Restate, and AWS LDF's main messaging point against us. We have durability they don't."},
+      {q:"Any customer proof points?", a:"Lovable is saving up to $40/month per customer by switching to Serverless Workers."}
     ],
     notionUrl:"https://app.notion.com/p/2e28fc56773880b9956bfa86ba550d35",
     docsUrl:null
@@ -369,6 +370,21 @@ const features = [
   },
   {
     theme:"ai", themeLabel:"Theme 1 — Build durable AI & apps faster",
+    name:"AI partner ecosystem",
+    keynote:true, status:"ga",
+    summary:"A growing set of official integrations with popular AI frameworks — build with Temporal using the tools you already use.",
+    talkTrack:"\"We're building an ecosystem of AI partner integrations so developers can use Temporal with the AI frameworks they already love — LangChain, CrewAI, Google ADK, OpenAI Agents SDK, and more.\"",
+    whoCaresAbout:"Teams building with popular AI frameworks; engineering leaders evaluating Temporal for AI workloads",
+    faqs:[
+      {q:"What frameworks are included?", a:"Google ADK, OpenAI Agents SDK, and others — Temporal is building a growing set of integrations with the most popular AI frameworks."},
+      {q:"What does the integration actually give me?", a:"Durability, retries, observability, and session management on top of whatever the framework provides. Temporal handles the hard production reliability problems."},
+      {q:"Where can I learn more?", a:"temporal.io/partners/ai — you can also submit interest for frameworks not yet listed."}
+    ],
+    notionUrl:null,
+    docsUrl:"https://temporal.io/solutions/ai"
+  },
+  {
+    theme:"ai", themeLabel:"Theme 1 — Build durable AI & apps faster",
     name:"Nexus SDK expansions",
     keynote:true, status:"preview",
     summary:"Nexus (cross-namespace/cross-team service connections) now available in Python (GA), .NET and TypeScript (Public Preview).",
@@ -403,7 +419,7 @@ const features = [
     whoCaresAbout:"Platform engineers running mixed workloads; multi-tenant platform teams; SREs managing shared infrastructure",
     faqs:[
       {q:"Are Priority and Fairness the same thing?", a:"No. Priority controls which tasks run first. Fairness prevents starvation across tenants or workload types. They're complementary."},
-      {q:"Can I see a customer example?", a:"Relativity is speaking at Replay about their Fairness use case. Webinar May 15 goes deeper."},
+      {q:"Can I see a customer example?", a:"Relativity is speaking at Replay about their Fairness use case. Webinar May 14 goes deeper."},
       {q:"Is this available now?", a:"GA — available now."}
     ],
     notionUrl:"https://app.notion.com/p/1df8fc567738807e8d7de27ddcdf2709",
@@ -475,7 +491,7 @@ const features = [
     talkTrack:"\"We now have a documented, tooled migration path from Temporal Cloud back to self-hosted — so customers know they're never locked in.\"",
     whoCaresAbout:"Enterprise prospects with vendor lock-in concerns; procurement/legal teams; regulated customers",
     faqs:[
-      {q:"Can customers use this today?", a:"Demo ready — not yet in pre-release. Talk to sales to get on the waitlist."},
+      {q:"Can customers use this today?", a:"Demo ready — not yet in pre-release. Share customer name in #crew-cloud-migration Slack to get on the waitlist."},
       {q:"Why would Temporal offer this?", a:"It removes the lock-in objection from enterprise deals. Confidence in an exit path actually makes customers more willing to commit."},
       {q:"Does this mean customers will leave?", a:"The opposite — it reduces anxiety that prevents them from expanding."}
     ],
@@ -484,17 +500,46 @@ const features = [
   },
   {
     theme:"ops", themeLabel:"Theme 2 — Operate at scale with confidence",
+    name:"Projects",
+    keynote:false, status:"demo",
+    summary:"Organize namespaces and resources by team, service, or business unit — clean boundaries and simplified access control without account sprawl.",
+    talkTrack:"\"Projects let you organize resources by team or business unit — clean boundaries, simplified access control, and cost visibility without account sprawl.\"",
+    whoCaresAbout:"Platform engineers managing multi-team deployments; enterprise admins; teams with many namespaces",
+    faqs:[
+      {q:"Can customers use this today?", a:"Demo ready only — pre-release target is June or July 2026."},
+      {q:"How does this relate to namespaces?", a:"Projects group namespaces and resources together under a team or business unit boundary. Namespaces remain the unit of isolation; Projects are the organizational layer above them."},
+      {q:"How does this relate to Custom Roles?", a:"Custom Roles defines what users can do. Projects defines where those permissions apply — role assignments can be scoped at the project level."}
+    ],
+    notionUrl:null,
+    docsUrl:null
+  },
+  {
+    theme:"ops", themeLabel:"Theme 2 — Operate at scale with confidence",
     name:"Custom roles",
-    keynote:false, status:"prerelease",
+    keynote:false, status:"demo",
     summary:"Granular, least-privilege access control at account, project, or namespace level.",
     talkTrack:"\"Custom Roles let you define granular, least-privilege permissions at the account, project, or namespace level — no more over-scoped admin roles.\"",
     whoCaresAbout:"Security teams; enterprise compliance; IT admins managing Temporal Cloud access",
     faqs:[
-      {q:"What's available today?", a:"Pre-release — customers should express interest through their account team."},
+      {q:"Can customers use this today?", a:"Demo ready only — pre-release target is May or June 2026."},
       {q:"How does this relate to SCIM?", a:"SCIM handles user provisioning/deprovisioning via your IdP. Custom Roles defines what those users can do once they're in."}
     ],
     notionUrl:null,
     docsUrl:null
+  },
+  {
+    theme:"ops", themeLabel:"Theme 2 — Operate at scale with confidence",
+    name:"Principal attribution",
+    keynote:false, status:"prerelease",
+    summary:"Server-verified, non-spoofable tracking of who initiated every workflow execution — for audit and compliance.",
+    talkTrack:"\"Temporal now tracks who initiated every workflow execution with a server-verified identity — for audit and compliance use cases.\"",
+    whoCaresAbout:"Security and compliance teams; regulated industries; customers with audit requirements. Mention only if the customer has specific audit needs.",
+    faqs:[
+      {q:"What makes this different from just logging?", a:"The attribution is server-verified and non-spoofable — it can't be tampered with by the calling application, which is what compliance teams actually need."},
+      {q:"Is this available now?", a:"Pre-release — customers should express interest through their account team."}
+    ],
+    notionUrl:"https://app.notion.com/p/3498fc5677388036bbfde6bac8b46321",
+    docsUrl:"https://docs.temporal.io/workflow-execution/event#principal-attribution"
   },
   {
     theme:"ops", themeLabel:"Theme 2 — Operate at scale with confidence",
